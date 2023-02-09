@@ -119,6 +119,14 @@ const IconCfg = [
     type: 'iconimage-icon29',
     content: '\ue718',
   },
+  {
+    type: 'iconaddr',
+    content: '\ue71b',
+  },
+  {
+    type: 'iconip',
+    content: '\ue71c',
+  },
 ];
 
 export default IconCfg;

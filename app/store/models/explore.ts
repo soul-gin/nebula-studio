@@ -77,6 +77,7 @@ interface IState {
   showEdgeFields: string[];
 }
 
+// tag颜色选择
 const whichColor = (() => {
   const colorsTotal = DEFAULT_COLOR_PICK_LIST.length;
   let colorIndex = 0;
@@ -90,17 +91,66 @@ const whichColor = (() => {
   };
 })();
 
+// 历史版本
+/*
 function getGroup(tags) {
   return 't-' + tags.sort().join('-');
+}
+*/
+
+// 拼接tag[0]的分组属性
+function getGroup(tags, subgroup) {
+  return 't-' + tags.sort().join('-') + '-' + subgroup;
+}
+
+// 根据Tag[0]的属性, 增加子分类
+function getSubgroup(tags, properties) {
+  let subgroupDef = 0;
+  // 目前场景考虑效率,仅获取对应vid的tag坐标为0的属性值,如果后续需要查看多个需要遍历
+  const nodePropFirst = properties[tags[0]];
+  const { subgroup } = nodePropFirst;
+  // console.log(subgroup);
+  if (subgroup != null) {
+    subgroupDef = subgroup;
+  }
+  // console.log(subgroupDef);
+  return subgroupDef;
+}
+
+// 根据Tag[0]的属性, 获取icon
+function getCustomIconByTag(tags) {
+  let iconfront = '';
+  // 目前场景考虑效率,仅获取对应vid的tag坐标为0的属性值,如果后续需要查看多个需要遍历
+  const tagFirst: string = tags[0];
+  // 企业 个人 电话 地址 tag图标映射
+  if (tagFirst != null) {
+    //console.log(tagFirst);
+    if (tagFirst.indexOf('enterprise') !== -1) {
+      iconfront = 'iconimage-icon15';
+    } else if (tagFirst.indexOf('person') !== -1) {
+      iconfront = 'iconimage-icon10';
+    } else if (tagFirst.indexOf('phone') !== -1) {
+      iconfront = 'iconimage-icon23';
+    } else if (tagFirst.indexOf('address') !== -1) {
+      iconfront = 'iconaddr';
+    }
+    //console.log(iconfront);
+  }
+  return iconfront;
 }
 
 function getTagData(nodes, expand?) {
   const data = nodes.map(node => {
     const { vid, tags, properties } = node;
-    const group = getGroup(tags);
+
+    // 除了根据Tag组区分颜色, 同一个Tag下增加子分类
+    const subgroup = getSubgroup(tags, properties);
+
+    const group = getGroup(tags, subgroup);
     const color =
       expand?.vertexStyle === 'custom' ? expand.customColor : whichColor(group);
-    const icon = expand?.vertexStyle === 'custom' ? expand.customIcon : '';
+    // const icon = expand?.vertexStyle === 'custom' ? expand.customIcon : '';
+    const icon = expand?.vertexStyle === 'custom' ? expand.customIcon : getCustomIconByTag(tags);
     const nodeProp = {
       tags,
       properties,

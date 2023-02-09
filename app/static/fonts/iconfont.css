@@ -485,3 +485,11 @@
   content: "\e60c";
 }
 
+.iconaddr:before {
+  content: "\e71b";
+}
+
+.iconip:before {
+  content: "\e71c";
+}
+

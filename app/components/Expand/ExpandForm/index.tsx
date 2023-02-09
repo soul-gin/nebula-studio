@@ -140,10 +140,12 @@ class Expand extends React.Component<IProps, IState> {
     });
   };
 
+  // 自定义扩展tag的图标 iconfront
   handleExpand = () => {
     const { selectVertexes, edgesFields } = this.props;
     const { getFieldsValue } = this.props.form;
     const { filters, customColor, customIcon } = this.state;
+    // console.log('customIcon=' + customIcon);
     this.props.form.validateFields(async err => {
       if (err) {
         return;
@@ -383,8 +385,9 @@ class Expand extends React.Component<IProps, IState> {
                   initialValue: rules.step || '1',
                   rules: [
                     {
-                      message: intl.get('formRules.positiveIntegerRequired'),
-                      pattern: /^\d+$/,
+                      // 步数 单步
+                      message: intl.get('formRules.positiveIntegerLimit', { number: 10 }),
+                      pattern: /^([1-9]|10)$/,
                       transform(value) {
                         if (value) {
                           return Number(value);
@@ -405,8 +408,9 @@ class Expand extends React.Component<IProps, IState> {
                     initialValue: rules.minStep || '',
                     rules: [
                       {
-                        message: intl.get('formRules.positiveIntegerRequired'),
-                        pattern: /^\d+$/,
+                        // 步数 范围最小值
+                        message: intl.get('formRules.positiveIntegerLimit', { number: 10 }),
+                        pattern: /^([1-9]|10)$/,
                         transform(value) {
                           if (value) {
                             return Number(value);
@@ -425,8 +429,9 @@ class Expand extends React.Component<IProps, IState> {
                     initialValue: rules.maxStep || '',
                     rules: [
                       {
-                        message: intl.get('formRules.positiveIntegerRequired'),
-                        pattern: /^\d+$/,
+                        // 步数 范围最大值
+                        message: intl.get('formRules.positiveIntegerLimit', { number: 10 }),
+                        pattern: /^([1-9]|10)$/,
                         transform(value) {
                           if (value) {
                             return Number(value);
@@ -471,8 +476,9 @@ class Expand extends React.Component<IProps, IState> {
                 initialValue: rules.quantityLimit || 100,
                 rules: [
                   {
-                    message: intl.get('formRules.positiveIntegerRequired'),
-                    pattern: /^\d+$/,
+                    // 结果数量限制 最大值
+                    message: intl.get('formRules.positiveIntegerLimit', { number: 10000 }),
+                    pattern: /^([1-9]|[1-9]\d|[1-9]\d\d|[1-9]\d\d\d|10000)$/,
                     transform(value) {
                       if (value) {
                         return Number(value);

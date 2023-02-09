@@ -12,6 +12,11 @@ interface IProps {
   onMouseOut: () => void;
 }
 
+const edgeZhMapping = new Map<string, string>([
+  ['e_ent_tel', '电话'],
+  ['e_group', '分组']
+]);
+
 export default class Links extends React.Component<IProps, {}> {
   ref: SVGGElement;
 
@@ -43,9 +48,27 @@ export default class Links extends React.Component<IProps, {}> {
     return selectedPaths.map(path => path.id).includes(d.id) ? 3 : 2;
   };
 
+  // 将edge的schema英文描述替换为中文
+  linkNameMapping(links: IPath[]) {
+    links.forEach((item: IPath) => {
+      // 通过 edgeZhMapping 映射中文值
+      const edgeName = edgeZhMapping.get(item.type);
+      if (edgeName != null) {
+        item.type = edgeName;
+      }
+    });
+    return links;
+  }
+
   linkRender(links: IPath[], selectedPaths: IPath[]) {
     const self = this;
     const selectPathIds = selectedPaths.map(node => node.id);
+
+    // 查看links信息
+    // console.log(`links1=${JSON.stringify(this.linkNameMapping(links))}`);
+    // 将links中的边type替换为中文描述,暂时不启用该功能,看后续需求
+    //this.linkNameMapping(links);
+
     d3.select(this.ref)
       .selectAll('path')
       .data(links)

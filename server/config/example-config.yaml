@@ -4,4 +4,5 @@ web:
 #  tasks_dir:
 #  sqlitedb_file_path:
 #  ip:
-  port: 7001
+# 本地启动需要注释掉, 打包需要打开(避免 rpm 安装时还需要改配置)
+#  port: 7001

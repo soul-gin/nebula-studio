@@ -21,6 +21,4 @@ dist/
 !.commitlint.js
 !app/**/*.js
 tmp
-server/data
-assets/
 bin/

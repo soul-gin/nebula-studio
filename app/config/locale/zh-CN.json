@@ -109,6 +109,7 @@
     "nodeIdError": "格式错误，一行1个VID，按回车键分隔",
     "idRequired": "请输入导入的节点id",
     "positiveIntegerRequired": "请输入一个非负整数",
+    "positiveIntegerLimit": "请输入一个正整数且不超过 {number}",
     "nameValidate": "命名必须以字母开头，且只支持输入英文字母、数字以及下划线_",
     "nameRequired": "请输入名称",
     "numberRequired": "请输入正整数",

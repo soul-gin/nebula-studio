@@ -110,6 +110,7 @@
     "nodeIdError": "The format is invalid, should be one node per line, split by \\n like: \nid1\nid2\nid3",
     "idRequired": "The id field is mandatory",
     "positiveIntegerRequired": "Please enter a non-negative integer",
+    "positiveIntegerLimit": "Please enter a positive integer and not more than {number}",
     "nameValidate": "The name must start with a letter, and it only supports English letters, numbers and underscores",
     "nameRequired": "Please enter the name",
     "numberRequired": "Please enter a positive integer",
