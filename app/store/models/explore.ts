@@ -106,10 +106,17 @@ function getGroup(tags, subgroup) {
 // 根据Tag[0]的属性, 增加子分类
 function getSubgroup(tags, properties) {
   let subgroupDef = 0;
-  // 目前场景考虑效率,仅获取对应vid的tag坐标为0的属性值,如果后续需要查看多个需要遍历
-  const nodePropFirst = properties[tags[0]];
-  const { subgroup } = nodePropFirst;
-  // console.log(subgroup);
+  let subgroup = properties['subgroup']
+
+  if (subgroup == null && properties[tags[0]] != null){
+    // 针对存在多个tag场景下(properties中按tag分装了对应tag的数据)
+    // 目前场景考虑效率,仅获取对应vid的tag坐标为0的属性值,如果后续需要查看多个需要遍历
+    let nodePropFirst = properties[tags[0]];
+    //console.log(nodePropFirst);
+    subgroup = nodePropFirst['subgroup']
+  }
+
+  //console.log(subgroup);
   if (subgroup != null) {
     subgroupDef = subgroup;
   }
