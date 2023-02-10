@@ -62,12 +62,12 @@ $ nohup ./server &
 
 ### 1. Build Web Front
 ```
-# 如已经安装过 node_modules 可以忽略npm run install这步
-$ npm run install
+# 如已经安装过 node_modules ,且没有前端依赖需要更新, 可以忽略npm install这步
+$ npm install
 # 注意, 前端重新编译(build)后, 也需要重新打包后端, 因为前端文件是直接打包到后端代码中一起部署的
 $ npm run build
-# 把编译好的前端文件放至后端指定的打包目录
-mv dist server/assets
+# 把编译好的前端文件放至后端指定的打包目录(server/assets/下面直接是前端编译文件(*.js *.png app *.css),别直接把dist挪到server/assets/, 变成了server/assets/dist/)
+mkdir -p server/assets && rm -rf server/assets/* && mv dist/* server/assets/
 ```
 
 ### 1. Build Web Backend
@@ -87,13 +87,15 @@ $ go build -o server
 ```
 $ nohup ./server &
 
-// 启动后默认端口为 9000 (具体看example-config.yaml)
+// 启动后默认端口, 如果打开就是7001, 否则是9000 (具体看example-config.yaml)
+http://192.168.1.102:7001
 http://192.168.1.102:9000
 ```
 
 ### 4. Stop Server
 Use when you want shutdown the web app
 ```
+kill -9 $(lsof -t -i :7001)
 kill -9 $(lsof -t -i :9000)
 ```
 
@@ -138,6 +140,19 @@ vi example-config.yaml
 #重启
 systemctl restart nebula-graph-studio.service
 
+```
+
+### 6.重装流程
+```
+
+# 停止, 查看运行状态 code=exited
+sudo systemctl stop nebula-graph-studio.service && sudo systemctl status nebula-graph-studio.service | grep 'code=exited'
+# 卸载
+sudo rpm -e nebula-graph-studio-3.2.3.x86_64
+# 安装新包
+sudo rpm -i nebula-graph-studio-3.2.3.x86_64-20230210.rpm
+# 启动, 查看运行状态 active (running)
+sudo systemctl start nebula-graph-studio.service && sudo systemctl status nebula-graph-studio.service | grep 'active (running)'
 
 ```
 
