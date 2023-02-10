@@ -19,8 +19,10 @@ VERSION=`cat package.json | grep '"version":' | awk 'NR==1{print $2}' | awk -F'"
 RPM_TARGET=$DIR/package
 mkdir -p $RPM_TARGET
 
-cp -r $STUDIO/scripts/rpm $RPM_TARGET/scripts/
-mv $RPM_TARGET/scripts/CMakeLists.txt $RPM_TARGET/
+# 执行 cp -rf 其实就是 cp -i -rf, alias cp=’cp -i’, 可以直接调用/bin/cp, 不再提示覆盖问题
+# cp -rf $STUDIO/scripts/rpm $RPM_TARGET/scripts/
+/bin/cp -rf $STUDIO/scripts/rpm $RPM_TARGET/scripts/
+mv $RPM_TARGET/scripts/rpm/CMakeLists.txt $RPM_TARGET/
 
 cp -r $STUDIO/server/config $RPM_TARGET/
 cp -r $STUDIO/server/server $RPM_TARGET/

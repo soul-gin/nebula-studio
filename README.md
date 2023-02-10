@@ -60,14 +60,17 @@ $ nohup ./server &
 
 ## Production Deploy
 
-### 1. Build Web
+### 1. Build Web Front
 ```
+# 如已经安装过 node_modules 可以忽略npm run install这步
 $ npm run install
 # 注意, 前端重新编译(build)后, 也需要重新打包后端, 因为前端文件是直接打包到后端代码中一起部署的
 $ npm run build
+# 把编译好的前端文件放至后端指定的打包目录
+mv dist server/assets
 ```
 
-### 1. Build Web
+### 1. Build Web Backend
 ```
 // 查看默认端口,如果打开就是7001, 否则是9000;
 // default port 7001 in config/example-config.yaml 
@@ -82,7 +85,6 @@ $ go build -o server
 
 ### 3. Start
 ```
-$ mv dist server/assets
 $ nohup ./server &
 
 // 启动后默认端口为 9000 (具体看example-config.yaml)
